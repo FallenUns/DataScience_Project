@@ -34,3 +34,23 @@ function getRecommendation() {
 
 // Initialize
 seasonElement.dispatchEvent(new Event('change'));
+
+// Weather API Key
+const apiKey = 'c7cc5f87eeb22da038aac4efd7443c45';
+
+// Function to fetch weather data
+function fetchWeatherData(location) {
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`)
+    .then(response => response.json())
+    .then(data => {
+      // Process and use the weather data here
+      console.log(data);
+      const weatherInfo = document.getElementById('weatherInfo');
+      if (weatherInfo) {
+        weatherInfo.innerHTML = `Current Weather: ${data.weather[0].description}`;
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching weather data: ", error);
+    });
+}

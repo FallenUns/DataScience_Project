@@ -1,0 +1,17 @@
+body, h1, h2 {
+    font-family: 'Inter', Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h1, h2 {
+    color: #333;
+  }
+  
+  #questions {
+    margin-bottom: 20px;
+  }
+  
+  #result {
+    margin-top: 20px;
+  }
+  
