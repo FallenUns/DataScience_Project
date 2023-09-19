@@ -1,42 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Melbourne Holiday Suggestion Test</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
-  <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Melbourne Holiday Suggestion</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+    <header>
+        <h1>Melbourne Holiday Suggestion</h1>
+    </header>
     <div id="weatherInfo"></div>
-
-    <h1>Climate & Tourism Recommender</h1>
-
     <div id="questions">
         <div id="part1">
-        <h2>Part 1: What type of holiday are you going on?</h2>
-        <select id="season">
-            <option value="Summer">Summer</option>
-            <option value="Autumn">Autumn</option>
-            <option value="Winter">Winter</option>
-            <option value="Spring">Spring</option>
-        </select>
+            <h2>Part 1: What type of holiday are you going on?</h2>
+            <select id="season">
+                <option value="Summer">Summer</option>
+                <option value="Autumn">Autumn</option>
+                <option value="Winter">Winter</option>
+                <option value="Spring">Spring</option>
+            </select>
         </div>
-
+        
         <div id="part2">
-        <h2>Part 2: What would you like to do while on holiday?</h2>
-        <select id="activity">
-            <!-- Options will be populated by JavaScript -->
-        </select>
+            <h2>Part 2: What would you like to do while on holiday?</h2>
+            <select id="activity">
+                <!-- Options will be populated by JavaScript -->
+            </select>
+        </div>
         </div>
     </div>
-
-    <button onclick="getRecommendation()">Get Recommendation</button>
-
+    <button onclick="getRecommendation()">GET RECOMMENDATION</button>
     <div id="result">
         <h2>Recommended Destination:</h2>
         <p id="recommendation"></p>
     </div>
-
     <script src="script.js"></script>
-
 </body>
 </html>

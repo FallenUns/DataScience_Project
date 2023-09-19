@@ -2,7 +2,6 @@ const seasonElement = document.getElementById('season');
 const activityElement = document.getElementById('activity');
 const recommendationElement = document.getElementById('recommendation');
 
-// Define your activities for each season
 const activities = {
   'Summer': ['Beach', 'Camping', 'Wildlife'],
   'Autumn': ['Wine Tasting', 'Scenic Drives', 'River Cruise'],
@@ -10,24 +9,40 @@ const activities = {
   'Spring': ['Hiking Trail', 'Sport Events', 'Outdoor Dining']
 };
 
-// Update activity options when the season changes
 seasonElement.addEventListener('change', function() {
-  const selectedSeason = seasonElement.value;
-  const options = activities[selectedSeason];
-  activityElement.innerHTML = '';
+    const selectedSeason = seasonElement.value;
+    const options = activities[selectedSeason];
+    activityElement.innerHTML = '';
+  
+    // Change the background color based on the season
+    const colors = {
+      'Summer': '#FACE5C',
+      'Autumn': '#EA4D2A',
+      'Winter': '#2145C7',
+      'Spring': '#F59AE7'
+    };
 
-  options.forEach(function(activity) {
-    const option = document.createElement('option');
-    option.value = activity;
-    option.text = activity;
-    activityElement.appendChild(option);
+    const selectedColor = colors[selectedSeason] || '#FFFFFF'; // Fallback to white
+    activityElement.style.backgroundColor = selectedColor;
+  
+    // Change text color to white if background is blue
+    if (selectedColor === '#2145C7') {
+        activityElement.style.color = '#FFFFFF';
+    } else {
+        activityElement.style.color = '#000000';  // Default to black
+    }
+
+    options.forEach(function(activity) {
+      const option = document.createElement('option');
+      option.value = activity;
+      option.text = activity;
+      activityElement.appendChild(option);
+    });
   });
-});
 
 function getRecommendation() {
   const selectedSeason = seasonElement.value;
   const selectedActivity = activityElement.value;
-  // You can replace the following line with an API call to your back-end
   const recommendation = "Place for " + selectedActivity + " during " + selectedSeason;
   recommendationElement.innerText = recommendation;
 }

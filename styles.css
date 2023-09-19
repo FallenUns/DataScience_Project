@@ -1,17 +1,99 @@
 body, h1, h2 {
     font-family: 'Inter', Arial, sans-serif;
-    margin: 20px;
-  }
+    margin: 10px;
+    }
   
   h1, h2 {
     color: #333;
-  }
+    }
   
-  #questions {
+  #result {
+    margin-top: 10px;
+    }
+  
+/* Styling for header menu section */
+header {
+    background-color: #e0e0e0;
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
     margin-bottom: 20px;
   }
   
-  #result {
-    margin-top: 20px;
+  nav ul {
+    background-color: #333;
+    overflow: hidden;
+    color: white;
+    text-align: center;
   }
   
+  nav ul li {
+    display: inline;
+    padding: 14px;
+  }
+  
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: inline-block;
+  }
+
+/* Styling for questions section */
+#questions {
+    background-color: #e0fffa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #part1, #part2 {
+    background-color: #add2fd;
+    padding: 15px;
+    width: 45%;  /* Adjust width as needed */
+    border-radius: 5px;
+  }
+
+/* Styling for the dropdown */
+select {
+    width: 90%;  /* Full width */
+    padding: 3px;  /* Add some padding */
+    margin: 8px;  /* Add some margin */
+    font-size: 16px;  /* Increase font size */
+    border-radius: 4px;  /* Rounded corners */
+  }
+  
+  /* Specific styles for each season */
+  #part1 select {
+    background-color: #f3f3f3;
+  }
+  
+  /* Override styles when dropdown is focused */
+  select:focus {
+    outline: none;
+    box-shadow: 0 0 10px #719ECE;
+  }
+  
+  
+/* Styling for 'Get Recommendation' button */
+button {
+    background-color: #ea4d2a;
+    color: rgb(255, 255, 255);
+    padding: 11px 13px;
+    font-size: 14px;
+    border-color: whitesmoke;
+    cursor: pointer;
+    margin: 20px auto;
+    display: block;
+  }
+
+  /* Styling
+  Summer: FACE5C
+  Spting: F59AE7
+  Fall : EA4D2A
+  Winter : 2145C7
+  */
+
