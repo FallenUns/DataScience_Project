@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tourism Recommender</title>
+  <title>Melbourne Holiday Suggestion</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <h1>Tourism Recommender</h1>
-  
-  <form id="holidayTypeForm">
-    <label>Select the type of holiday:</label>
-    <select id="holidayType">
-      <option value="summer">Summer</option>
-      <option value="autumn">Autumn</option>
-      <option value="winter">Winter</option>
-      <option value="spring">Spring</option>
-    </select>
-    <button type="button" onclick="showActivities()">Next</button>
-  </form>
-  
-  <div id="activityOptions" style="display:none;">
-    <label>Select an activity:</label>
-    <select id="activityType">
-      <!-- Options will be filled by JavaScript -->
-    </select>
-    <button type="button" onclick="showDestinations()">Show Destinations</button>
+  <h1>Melbourne Holiday Suggestion</h1>
+  <div class="container">
+    <form id="holidayTypeForm">
+        <label>Select the type of holiday:</label>
+        <select id="holidayType">
+        <option value="summer">Summer</option>
+        <option value="autumn">Autumn</option>
+        <option value="winter">Winter</option>
+        <option value="spring">Spring</option>
+        </select>
+        <button type="button" onclick="showActivities()">Next</button>
+    </form>
+    
+    <div id="activityOptions" style="display:none;">
+        <label>Select an activity:</label>
+        <select id="activityType">
+        <!-- Options will be filled by JavaScript -->
+        </select>
+        <button type="button" onclick="showDestinations()">Show Destinations</button>
+    </div>
+
+    <ul id="destinationList">
+        <!-- Recommended destinations will be listed here -->
+    </ul>
   </div>
-
-  <ul id="destinationList">
-    <!-- Recommended destinations will be listed here -->
-  </ul>
-
   <script src="script.js"></script>
 </body>
 </html>
