@@ -7,12 +7,17 @@
 </head>
 <body>
     <header>
-        <div id="temperatureInfo">
-          <span id="weatherIcon"></span>
-          <span id="temperatureValue"></span>
+        <div id="weatherBox">
+          <span id="locationInfo"></span>
+          <div id="weatherDetails">
+            <span id="weatherIcon"></span>
+            <span id="temperatureValue"></span>
+          </div>
         </div>
-        <h1>Climate & Tourism Recommender</h1>
-      </header>
+        <div id="titleBox">
+          <h1>Place Recommender</h1>
+        </div>
+      </header>      
     <div id="questions">
         <div id="part1">
             <h2>Part 1: What type of holiday are you going on?</h2>
@@ -27,7 +32,6 @@
         <div id="part2">
             <h2>Part 2: What would you like to do while on holiday?</h2>
             <select id="activity">
-                <!-- Options will be populated by JavaScript -->
             </select>
         </div>
         </div>

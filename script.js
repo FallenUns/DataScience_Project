@@ -49,7 +49,7 @@ function getRecommendation() {
 seasonElement.dispatchEvent(new Event('change'));
 
 // Weather API Key
-const apiKey = 'c7cc5f87eeb22da038aac4efd7443c45';
+const apiKey = 'f367485e723c43718aaaf6d17ecf21f3';
 
 // Latitude and longitude for Melbourne
 const melbourneLat = -37.8136;
@@ -57,12 +57,12 @@ const melbourneLon = 144.9631;
 
 // Function to fetch weather data based on latitude and longitude
 function fetchWeatherData() {
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${melbourneLat}&lon=${melbourneLon}&appid=${apiKey}`;
+  const apiUrl = `https://pro.openweathermap.org/data/2.5/weather?lat=${melbourneLat}&lon=${melbourneLon}&appid=${apiKey}`;
   
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
-      // Convert temperature to Celsius
+      // Convert temperature to Celsius and round it
       const temperatureInKelvin = data.main.temp;
       const temperatureInCelsius = parseInt(temperatureInKelvin - 273.15, 10);
 
@@ -72,7 +72,19 @@ function fetchWeatherData() {
         temperatureValue.innerHTML = `${temperatureInCelsius}°C`;
       }
 
-      // Update weather icon based on condition code
+      // Update location information
+      const locationInfo = document.getElementById('locationInfo');
+      if (locationInfo) {
+        locationInfo.innerHTML = "Melbourne Weather Right Now";
+      }
+
+      // Determine if it's day or night
+      const currentTime = new Date().getTime() / 1000;  // Current time in Unix format
+      const sunrise = data.sys.sunrise;
+      const sunset = data.sys.sunset;
+      const isDaytime = currentTime > sunrise && currentTime < sunset;
+
+      // Update weather icon based on condition code and time of day
       const weatherIcon = document.getElementById('weatherIcon');
       const conditionCode = data.weather[0].id;
       if (weatherIcon) {
@@ -86,7 +98,7 @@ function fetchWeatherData() {
         } else if (conditionCode >= 700 && conditionCode < 800) {
           icon = '🌫️';  // Atmosphere
         } else if (conditionCode === 800) {
-          icon = '☀️';  // Clear
+          icon = isDaytime ? '☀️' : '🌕';  // Clear (Day or Night)
         } else if (conditionCode > 800) {
           icon = '☁️';  // Clouds
         }

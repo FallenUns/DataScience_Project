@@ -1,120 +1,79 @@
+/* General Styles */
 body, h1, h2 {
-    font-family: 'Inter', Arial, sans-serif;
-    margin: 10px;
-    }
-  
-    h1 {
-      color : #333;
-      margin: 0 auto;
-    }
+  font-family: 'Inter', Arial, sans-serif;
+  margin: 10px;
+  color: #333;
+}
 
-  h2 {
-    color: #333;
-    }
-  
-  #result {
-    margin-top: 10px;
-    }
-  
-/* Styling for header menu section */
+/* Header Styles */
 header {
-    background-color: #15ff008c;
-    color: rgb(255, 255, 255);
-    border-radius: 10px;
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 20px;
-    display: flex;  /* Add flex display */
-    justify-content: space-between;  /* Align items */
-    align-items: center;  /* Vertical alignment */
-  }
-  
-  nav ul {
-    background-color: #333;
-    overflow: hidden;
-    color: white;
-    text-align: center;
-  }
-  
-  nav ul li {
-    display: inline;
-    padding: 14px;
-  }
-  
-  nav ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 14px 20px;
-    display: inline-block;
-  }
-
-/* Styling for questions section */
-#questions {
-    background-color: #e0fffa;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  #part1, #part2 {
-    background-color: #add2fd;
-    padding: 15px;
-    width: 45%;  /* Adjust width as needed */
-    border-radius: 5px;
-  }
-
-/* Styling for the dropdown */
-select {
-    width: 90%;  /* Full width */
-    padding: 3px;  /* Add some padding */
-    margin: 8px;  /* Add some margin */
-    font-size: 16px;  /* Increase font size */
-    border-radius: 4px;  /* Rounded corners */
-  }
-  
-  /* Specific styles for each season */
-  #part1 select {
-    background-color: #f3f3f3;
-  }
-  
-  /* Override styles when dropdown is focused */
-  select:focus {
-    outline: none;
-    box-shadow: 0 0 10px #719ECE;
-  }
-  
-  
-/* Styling for 'Get Recommendation' button */
-button {
-    background-color: #ea4d2a;
-    color: rgb(255, 255, 255);
-    padding: 11px 13px;
-    font-size: 14px;
-    border-color: whitesmoke;
-    cursor: pointer;
-    margin: 20px auto;
-    display: block;
-  }
-
-/* Style for temperature and weather icons */
-#temperatureInfo {
+  background-color: #15ff008c;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
   display: flex;
-  font-weight: 600;
-  color : #000000;
+  justify-content: space-between;
   align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#weatherIcon {
-  font-size: 24px;
-  margin-right: 8px;
+/* Common Styles for Boxes */
+#weatherBox, #titleBox {
+  padding: 10px;
+  color: #000000;
+  border-radius: 5px;
+  font-weight: 700;
 }
 
-  /* Styling
-  Summer: FACE5C
-  Spting: F59AE7
-  Fall : EA4D2A
-  Winter : 2145C7
-  */
+/* Weather Information Styles */
+#temperatureInfo, #weatherDetails {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 50px;
+}
 
+#locationInfo {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+/* Question Section Styles */
+#questions {
+  background-color: #e0fffa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+#part1, #part2 {
+  background-color: #add2fd;
+  padding: 15px;
+  width: 45%;
+  border-radius: 5px;
+}
+
+/* Dropdown Styles */
+select {
+  width: 90%;
+  padding: 3px;
+  margin: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+/* Button Styles */
+button {
+  background-color: #ea4d2a;
+  color: rgb(255, 255, 255);
+  padding: 11px 13px;
+  font-size: 14px;
+  border-color: whitesmoke;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+}
