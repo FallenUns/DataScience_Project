@@ -3,7 +3,12 @@ body, h1, h2 {
     margin: 10px;
     }
   
-  h1, h2 {
+    h1 {
+      color : #333;
+      margin: 0 auto;
+    }
+
+  h2 {
     color: #333;
     }
   
@@ -13,12 +18,15 @@ body, h1, h2 {
   
 /* Styling for header menu section */
 header {
-    background-color: #e0e0e0;
+    background-color: #15ff008c;
     color: rgb(255, 255, 255);
     border-radius: 10px;
     text-align: center;
     padding: 10px;
     margin-bottom: 20px;
+    display: flex;  /* Add flex display */
+    justify-content: space-between;  /* Align items */
+    align-items: center;  /* Vertical alignment */
   }
   
   nav ul {
@@ -89,6 +97,19 @@ button {
     margin: 20px auto;
     display: block;
   }
+
+/* Style for temperature and weather icons */
+#temperatureInfo {
+  display: flex;
+  font-weight: 600;
+  color : #000000;
+  align-items: center;
+}
+
+#weatherIcon {
+  font-size: 24px;
+  margin-right: 8px;
+}
 
   /* Styling
   Summer: FACE5C

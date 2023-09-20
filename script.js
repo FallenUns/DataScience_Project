@@ -10,35 +10,33 @@ const activities = {
 };
 
 seasonElement.addEventListener('change', function() {
-    const selectedSeason = seasonElement.value;
-    const options = activities[selectedSeason];
-    activityElement.innerHTML = '';
-  
-    // Change the background color based on the season
-    const colors = {
-      'Summer': '#FACE5C',
-      'Autumn': '#EA4D2A',
-      'Winter': '#2145C7',
-      'Spring': '#F59AE7'
-    };
+  const selectedSeason = seasonElement.value;
+  const options = activities[selectedSeason];
+  activityElement.innerHTML = '';
 
-    const selectedColor = colors[selectedSeason] || '#FFFFFF'; // Fallback to white
-    activityElement.style.backgroundColor = selectedColor;
-  
-    // Change text color to white if background is blue
-    if (selectedColor === '#2145C7') {
-        activityElement.style.color = '#FFFFFF';
-    } else {
-        activityElement.style.color = '#000000';  // Default to black
-    }
+  const colors = {
+    'Summer': '#FACE5C',
+    'Autumn': '#EA4D2A',
+    'Winter': '#2145C7',
+    'Spring': '#F59AE7'
+  };
 
-    options.forEach(function(activity) {
-      const option = document.createElement('option');
-      option.value = activity;
-      option.text = activity;
-      activityElement.appendChild(option);
-    });
+  const selectedColor = colors[selectedSeason] || '#FFFFFF';
+  activityElement.style.backgroundColor = selectedColor;
+
+  if (selectedColor === '#2145C7' || selectedColor === '#EA4D2A') {
+    activityElement.style.color = '#FFFFFF';  // Set to white
+  } else {
+    activityElement.style.color = '#000000';  // Set to black
+  }
+
+  options.forEach(function(activity) {
+    const option = document.createElement('option');
+    option.value = activity;
+    option.text = activity;
+    activityElement.appendChild(option);
   });
+});
 
 function getRecommendation() {
   const selectedSeason = seasonElement.value;
@@ -53,19 +51,52 @@ seasonElement.dispatchEvent(new Event('change'));
 // Weather API Key
 const apiKey = 'c7cc5f87eeb22da038aac4efd7443c45';
 
-// Function to fetch weather data
-function fetchWeatherData(location) {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`)
+// Latitude and longitude for Melbourne
+const melbourneLat = -37.8136;
+const melbourneLon = 144.9631;
+
+// Function to fetch weather data based on latitude and longitude
+function fetchWeatherData() {
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${melbourneLat}&lon=${melbourneLon}&appid=${apiKey}`;
+  
+  fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
-      // Process and use the weather data here
-      console.log(data);
-      const weatherInfo = document.getElementById('weatherInfo');
-      if (weatherInfo) {
-        weatherInfo.innerHTML = `Current Weather: ${data.weather[0].description}`;
+      // Convert temperature to Celsius
+      const temperatureInKelvin = data.main.temp;
+      const temperatureInCelsius = parseInt(temperatureInKelvin - 273.15, 10);
+
+      // Update temperature
+      const temperatureValue = document.getElementById('temperatureValue');
+      if (temperatureValue) {
+        temperatureValue.innerHTML = `${temperatureInCelsius}°C`;
+      }
+
+      // Update weather icon based on condition code
+      const weatherIcon = document.getElementById('weatherIcon');
+      const conditionCode = data.weather[0].id;
+      if (weatherIcon) {
+        let icon;
+        if (conditionCode >= 200 && conditionCode < 300) {
+          icon = '⛈️';  // Thunderstorm
+        } else if (conditionCode >= 300 && conditionCode < 600) {
+          icon = '🌧️';  // Rain
+        } else if (conditionCode >= 600 && conditionCode < 700) {
+          icon = '❄️';  // Snow
+        } else if (conditionCode >= 700 && conditionCode < 800) {
+          icon = '🌫️';  // Atmosphere
+        } else if (conditionCode === 800) {
+          icon = '☀️';  // Clear
+        } else if (conditionCode > 800) {
+          icon = '☁️';  // Clouds
+        }
+        weatherIcon.innerHTML = icon;
       }
     })
     .catch(error => {
       console.error("Error fetching weather data: ", error);
     });
 }
+
+// Call the function when the page loads
+fetchWeatherData();
