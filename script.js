@@ -141,8 +141,37 @@ dateElement.addEventListener('change', function() {
   }
 
   const selectedSeasonSymbol = seasonSymbols[selectedSeason] || '';
-  seasonField.innerHTML = `Current Season: ${selectedSeason} ${selectedSeasonSymbol}`;
+  seasonField.innerHTML = `Selected Season: ${selectedSeason} ${selectedSeasonSymbol}`;
 });
+
+async function fetchForecastWeather(date) {
+  const apiUrl = `https://pro.openweathermap.org/data/2.5/forecast/climate?lat=${melbourneLat}&lon=${melbourneLon}&appid=${apiKey}`;
+  let weatherData = {};
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    const targetDate = new Date(date);
+    const targetTimestamp = Math.floor(targetDate.getTime() / 1000);  // Convert to Unix timestamp (UTC)
+
+    // Convert to the same date format to compare
+    const forecast = data.list.find(forecast => {
+      const forecastDate = new Date(forecast.dt * 1000);  // Convert Unix timestamp to JavaScript Date object
+      return forecastDate.getUTCFullYear() === targetDate.getUTCFullYear() &&
+             forecastDate.getUTCMonth() === targetDate.getUTCMonth() &&
+             forecastDate.getUTCDate() === targetDate.getUTCDate();
+    });
+
+    if (forecast) {
+      weatherData = {
+        temperature: parseInt(forecast.temp.day - 273.15, 10),  // Kelvin to Celsius
+        rain: forecast.rain || 0  // mm
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching weather data: ", error);
+  }
+  return weatherData;
+}
 
 function getRecommendation() {
   const selectedDate = new Date(dateElement.value);
@@ -154,15 +183,102 @@ function getRecommendation() {
 dateElement.dispatchEvent(new Event('change'));
 fetchWeatherData();
 
+// Function to format date from yyyy-mm-dd to dd MMMM yyyy
+function formatDate(inputDate) {
+  const date = new Date(inputDate);
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
+}
+
+// Initialize all boxes to be active by default
+function initializeTourismActivityBoxes() {
+  const busyBox = document.getElementById('busyBox');
+  const moderateBox = document.getElementById('moderateBox');
+  const lowBox = document.getElementById('lowBox');
+
+  busyBox.className = 'tourism-box busy';
+  moderateBox.className = 'tourism-box moderate';
+  lowBox.className = 'tourism-box low';
+}
+
+// Update boxes based on the predicted level
+function updateTourismActivityBoxes(predictedLevel) {
+  const busyBox = document.getElementById('busyBox');
+  const moderateBox = document.getElementById('moderateBox');
+  const lowBox = document.getElementById('lowBox');
+
+  // Reset all boxes to active
+  initializeTourismActivityBoxes();
+
+  // Gray out the non-predicted boxes
+  switch (predictedLevel) {
+    case 'busy':
+      moderateBox.className = 'tourism-box inactive';
+      lowBox.className = 'tourism-box inactive';
+      break;
+    case 'moderate':
+      busyBox.className = 'tourism-box inactive';
+      lowBox.className = 'tourism-box inactive';
+      break;
+    case 'low':
+      busyBox.className = 'tourism-box inactive';
+      moderateBox.className = 'tourism-box inactive';
+      break;
+  }
+}
+
+// Set the default date to today
+const today = new Date();
+const yyyy = today.getFullYear();
+const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+const dd = String(today.getDate()).padStart(2, '0');
+
+const formattedToday = `${yyyy}-${mm}-${dd}`;
+dateElement.value = formattedToday;
+
+// Dispatch an event to trigger any 'change' event listeners
+dateElement.dispatchEvent(new Event('change'));
+
+// This will run when the document is fully loaded
 document.addEventListener("DOMContentLoaded", function() {
+  // Initialize boxes to be active
+  initializeTourismActivityBoxes();
+
   const dateElement = document.getElementById('holidayDate');
+  const predictedWeatherElement = document.getElementById('predictedWeatherOutput');
 
-  dateElement.addEventListener('change', async function() {
-    const selectedDate = dateElement.value; // Get the date string from the input
-    const prediction = await predictWeather(selectedDate);
+  dateElement.addEventListener('change', function() {
+    // Add a delay (buffer) of 2 seconds
+    setTimeout(async () => {
+      const selectedDate = dateElement.value;
+      const today = new Date();
+      const thirtyDaysFromNow = new Date();
+      thirtyDaysFromNow.setDate(today.getDate() + 30);
+      const thirtyDaysBefore = new Date();
+      thirtyDaysBefore.setDate(today.getDate() - 30);
+      
 
-    // Display the results
-    console.log(`Predicted temperature: ${prediction.temperature}`);
-    console.log(`Will it rain? ${prediction.willRain ? 'Yes' : 'No'}`);
+      let prediction;
+
+      // Check if the selected date is within the next 30 days
+      if (new Date(selectedDate) > thirtyDaysBefore && new Date(selectedDate) < thirtyDaysFromNow) {
+        // Fetch forecast weather data
+        prediction = await fetchForecastWeather(selectedDate);
+        console.log("Prediction object:", prediction);
+      } else {
+        // Use ML model to predict weather (Your existing code)
+        prediction = await predictWeather(selectedDate);  // Assuming predictWeather is defined elsewhere
+      }
+
+      // Update UI
+      const boldTemperature = `<b>${prediction.temperature}°C</b>`;
+      const boldRain = `<b>${prediction.rain}mm</b>`;
+      const formattedDate = formatDate(selectedDate);
+      predictedWeatherElement.innerHTML = `The weather that you will most likely to experience in Melbourne on <b>${formattedDate}</b> is ${boldTemperature} with a ${boldRain} chance of rain.`;
+
+      // For demonstration, using a static 'moderate' value for tourism activity
+      // In a real-world scenario, this would be predicted by your model or fetched from an API
+      updateTourismActivityBoxes('moderate');
+    }, 2000); // 2-second buffer
   });
 });

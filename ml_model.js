@@ -1,33 +1,35 @@
 let model;
 
 async function loadModel() {
-  model = await tf.loadLayersModel('path/to/your/model.json');
+  // model = await tf.loadLayersModel('path/to/your/model.json');
 }
 
 async function predictWeather(inputDateString) {
-  // Convert date to features for the model
+  await new Promise(resolve => setTimeout(resolve, 1000));
   const inputDate = new Date(inputDateString);
-  const day = inputDate.getDate()
-  const month = inputDate.getMonth() + 1;  // JS months are 0-indexed
+  const day = inputDate.getDate();
+  const month = inputDate.getMonth() + 1;  // JavaScript months are 0-indexed
   const year = inputDate.getFullYear();
+  console.log(day)
 
-  // Create tensor from the data
-  const tensorData = tf.tensor([[day, month, year]]); // Assume the model expects a 3D tensor
+  // // Create the tensor from the input date
+  // const tensorData = tf.tensor([[day, month, year]]);
+  
+  // const prediction = model.predict(tensorData);
+  // const predictionArray = await prediction.array();
+  // const predictedTemperature = predictionArray[0][0];
+  // const predictedRainProbability = predictionArray[0][1];
 
-  // Make prediction
-  const prediction = model.predict(tensorData);
-
-  // Convert tensor prediction to an array
-  const predictionArray = await prediction.array();
-
-  // Assume model outputs a 2-element array: [predictedTemperature, predictedRainProbability]
-  const predictedTemperature = predictionArray[0][0];
-  const predictedRainProbability = predictionArray[0][1];
-
-  return {
-    temperature: predictedTemperature,
-    willRain: predictedRainProbability > 0.5  // It will rain if probability > 0.5
-  };
+  // return {
+  //   temperature: predictedTemperature.toFixed(2),
+  //   rain: (predictedRainProbability * 100).toFixed(2)
+  // };
+  return{
+    temperature: 25,
+    rain: 13
+  }
 }
 
-loadModel();  // Load the model when the script is loaded
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadModel();
+});

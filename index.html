@@ -22,22 +22,33 @@
         <h1>MELBOURNE HOLIDAY SUGGESTION</h1>
       </div>
     </header>  
-    <div id="questions">
+    <div id="container">
+      <div id="questions">
         <div id="part1">
-            <h2>When are you planning to go to Melbourne?</h2>
+            <h2>When are you planning to go to Melbourne?
               <input type="date" id="holidayDate">
               <h3 id="seasonBox"><span id="currentSeason"></span></h3>
-            </select>
+            </h2>
+        </div>
+        <div id="predictedWeather">
+          <h2>Predicted Weather</h2>
+            <h4><p id="predictedWeatherOutput">The weather that you will most likely to experience in Melbourne on dd/mm/yyyy is --°C with a --mm chance of rain.</p></h4> 
+          <h2>Predicted Tourism Activity</h2>
+          <h4><p id="predictedTourist">On the selected month, you can expect the levels of activity to be:</p></h4>
+          <div id="busyBox" class="tourism-box busy">Busy</div>
+          <div id="moderateBox" class="tourism-box moderate">Moderate</div>
+          <div id="lowBox" class="tourism-box low">Low</div>
         </div>
       </div>
     </div>
     <button onclick="getRecommendation()">GET RECOMMENDATION</button>
-    <div id="result">
-        <h2>Recommended Destination:</h2>
-        <p id="recommendation"></p>
+    <div>
+      <h1>
+        <!-- PLACE RECOMMENDER HERE, HARD CODE THIS SHIT -->
+      </h1>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="script.js"></script>
     <script src="ml_model.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

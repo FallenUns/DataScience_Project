@@ -25,6 +25,7 @@ header {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 /* New styles for header content */
 #headerContent {
   display: flex; 
@@ -90,11 +91,12 @@ header {
   justify-content: space-between;
 }
 
-#part1, #part2 {
+#part1, #predictedWeather {
   background-color: #add2fd;
   padding: 15px;
   width: 45%;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 
 /* Dropdown Styles */
@@ -117,6 +119,13 @@ h3 {
   justify-content: space-between;
 }
 
+h4{
+  margin-left: 10px;
+  margin-top: 0px;
+  font-size: 14px;
+  font-weight: 100;
+}
+
 /* Button Styles */
 button {
   background-color: #ff2f00da;
@@ -128,4 +137,36 @@ button {
   margin: 20px auto;
   display: block;
   font-weight: bold;
+}
+
+.tourism-box {
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  box-shadow: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin: 5px;
+  display: inline-block;
+}
+
+.tourism-box.busy {
+  background-color: red;
+  color: white;
+}
+
+.tourism-box.moderate {
+  background-color: orange;
+  color: black;
+}
+
+.tourism-box.low {
+  background-color: green;
+  color: white;
+}
+
+.tourism-box.inactive {
+  background-color: grey;
+  color: white;
 }
