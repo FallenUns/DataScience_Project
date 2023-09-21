@@ -2,25 +2,26 @@
 <html>
 <head>
     <title>Melbourne Holiday Suggestion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <header>
-        <div id="weatherBox">
-          <span id="locationInfo"></span>
+      <div id="headerContent">
+        <div id="weatherWidget">
+          <div id="locationInfo">Melbourne Weather Right Now</div>
           <div id="weatherDetails">
-            <span id="weatherIcon"></span>
+            <i id="weatherIcon" class=""></i>
             <span id="temperatureValue"></span>
           </div>
         </div>
-        <div id="titleBox">
-          <h1>Place Recommender</h1>
-        </div>
-      </header>      
+        <h1>Melbourne Holiday Suggestion</h1>
+      </div>
+    </header>  
     <div id="questions">
         <div id="part1">
-            <h2>Part 1: What type of holiday are you going on?</h2>
+            <h2>What type of holiday are you going on?</h2>
             <select id="season">
                 <option value="Summer">Summer</option>
                 <option value="Autumn">Autumn</option>
@@ -30,7 +31,7 @@
         </div>
         
         <div id="part2">
-            <h2>Part 2: What would you like to do while on holiday?</h2>
+            <h2>What would you like to do while on holiday?</h2>
             <select id="activity">
             </select>
         </div>

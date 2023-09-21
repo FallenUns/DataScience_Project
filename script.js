@@ -55,10 +55,8 @@ const apiKey = 'f367485e723c43718aaaf6d17ecf21f3';
 const melbourneLat = -37.8136;
 const melbourneLon = 144.9631;
 
-// Function to fetch weather data based on latitude and longitude
 function fetchWeatherData() {
   const apiUrl = `https://pro.openweathermap.org/data/2.5/weather?lat=${melbourneLat}&lon=${melbourneLon}&appid=${apiKey}`;
-  
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
@@ -77,33 +75,32 @@ function fetchWeatherData() {
       if (locationInfo) {
         locationInfo.innerHTML = "Melbourne Weather Right Now";
       }
-
-      // Determine if it's day or night
-      const currentTime = new Date().getTime() / 1000;  // Current time in Unix format
-      const sunrise = data.sys.sunrise;
-      const sunset = data.sys.sunset;
-      const isDaytime = currentTime > sunrise && currentTime < sunset;
-
-      // Update weather icon based on condition code and time of day
-      const weatherIcon = document.getElementById('weatherIcon');
       const conditionCode = data.weather[0].id;
-      if (weatherIcon) {
-        let icon;
-        if (conditionCode >= 200 && conditionCode < 300) {
-          icon = '⛈️';  // Thunderstorm
-        } else if (conditionCode >= 300 && conditionCode < 600) {
-          icon = '🌧️';  // Rain
-        } else if (conditionCode >= 600 && conditionCode < 700) {
-          icon = '❄️';  // Snow
-        } else if (conditionCode >= 700 && conditionCode < 800) {
-          icon = '🌫️';  // Atmosphere
-        } else if (conditionCode === 800) {
-          icon = isDaytime ? '☀️' : '🌕';  // Clear (Day or Night)
-        } else if (conditionCode > 800) {
-          icon = '☁️';  // Clouds
-        }
-        weatherIcon.innerHTML = icon;
+      const dayOrNight = data.weather[0].icon.slice(-1); // 'd' for day, 'n' for night
+      let iconClass;
+
+      if (conditionCode >= 200 && conditionCode < 300) {
+        iconClass = 'wi-thunderstorm';
+      } else if (conditionCode >= 300 && conditionCode < 400) {
+        iconClass = 'wi-sprinkle';
+      } else if (conditionCode >= 500 && conditionCode < 600) {
+        iconClass = 'wi-rain';
+      } else if (conditionCode >= 600 && conditionCode < 700) {
+        iconClass = 'wi-snow';
+      } else if (conditionCode >= 700 && conditionCode < 800) {
+        iconClass = 'wi-fog';
+      } else if (conditionCode === 800) {
+        iconClass = (dayOrNight === 'd') ? 'wi-day-sunny' : 'wi-night-clear';
+      } else if (conditionCode === 801) {
+        iconClass = (dayOrNight === 'd') ? 'wi-day-sunny-overcast' : 'wi-night-partly-cloudy';
+      } else if (conditionCode >= 802 && conditionCode <= 804) {
+        iconClass = 'wi-cloudy';
+      } else {
+        iconClass = 'wi-na';  // Not available
       }
+
+      const weatherIcon = document.getElementById('weatherIcon');
+      weatherIcon.className = `wi ${iconClass}`;
     })
     .catch(error => {
       console.error("Error fetching weather data: ", error);

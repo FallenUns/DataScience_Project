@@ -7,16 +7,37 @@ body, h1, h2 {
 
 /* Header Styles */
 header {
-  background-color: #15ff008c;
+  backdrop-filter: blur(5px); /* Adds blur */
+  background-color: #0400ff8c;
   color: rgb(255, 255, 255);
   text-align: center;
   padding: 10px;
   margin-bottom: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* New styles for header content */
+#headerContent {
+  display: flex; 
+  justify-content: space-between; /* Distributes children */
+  align-items: center;  /* Vertically aligns children */
+  width: 100%;  /* Sets width */
+}
+
+/* Weather Widget Styles */
+#weatherWidget {
+  width: 220px;
+  backdrop-filter: blur(10px);
+  background-color: #4480b89c;
+  border-radius: 12px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
 }
 
 /* Common Styles for Boxes */
@@ -27,21 +48,27 @@ header {
   font-weight: 700;
 }
 
-/* Weather Information Styles */
-#temperatureInfo, #weatherDetails {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  margin-left: 50px;
+#locationInfo {
+  font-size: 14px;
+  color: #ebebeb;
+  margin-bottom: 10px;
 }
 
-#locationInfo {
-  font-size: 12px;
-  margin-bottom: 4px;
+/* Weather Details Styles */
+#weatherDetails {
+  display: flex;
+  color: #ebebeb;
+  justify-content: center;
+}
+
+/* Weather Icon and Temperature Value */
+#weatherIcon, #temperatureValue {
+  margin: 0 5px;
 }
 
 /* Question Section Styles */
 #questions {
+  backdrop-filter: blur(10px); 
   background-color: #e0fffa;
   padding: 20px;
   border-radius: 10px;
@@ -59,6 +86,7 @@ header {
 
 /* Dropdown Styles */
 select {
+  backdrop-filter: blur(10px); 
   width: 90%;
   padding: 3px;
   margin: 8px;
@@ -68,7 +96,7 @@ select {
 
 /* Button Styles */
 button {
-  background-color: #ea4d2a;
+  background-color: #ff2f00da;
   color: rgb(255, 255, 255);
   padding: 11px 13px;
   font-size: 14px;
@@ -76,4 +104,5 @@ button {
   cursor: pointer;
   margin: 20px auto;
   display: block;
+  font-weight: bold;
 }
