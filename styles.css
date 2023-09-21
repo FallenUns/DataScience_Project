@@ -69,7 +69,14 @@ header {
 
 /* Weather Icon and Temperature Value */
 #weatherIcon, #temperatureValue {
-  margin: 0 5px;
+  margin-right: 5px;
+}
+
+#sunInfo {
+  font-size: 16px;
+  margin-left: 15px;
+  justify-content: center;
+  font-weight: 700;
 }
 
 /* Question Section Styles */
@@ -91,13 +98,23 @@ header {
 }
 
 /* Dropdown Styles */
-select {
+select, input {
   backdrop-filter: blur(10px); 
   width: 90%;
   padding: 3px;
   margin: 8px;
   font-size: 16px;
   border-radius: 4px;
+}
+
+h3 {
+  backdrop-filter: blur(10px); 
+  background-color: #e0fffa;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Button Styles */

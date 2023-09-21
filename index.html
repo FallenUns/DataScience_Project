@@ -14,6 +14,9 @@
           <div id="weatherDetails">
             <i id="weatherIcon" class=""></i>
             <span id="temperatureValue">* --°C</span>
+            <div id="sunInfo">
+              <i id="sunIcon" class=""></i> <span id="sunTime"></span>
+            </div>
           </div>
         </div>
         <h1>MELBOURNE HOLIDAY SUGGESTION</h1>
@@ -21,12 +24,9 @@
     </header>  
     <div id="questions">
         <div id="part1">
-            <h2>What type of holiday are you going on?</h2>
-            <select id="season">
-                <option value="Summer">Summer</option>
-                <option value="Autumn">Autumn</option>
-                <option value="Winter">Winter</option>
-                <option value="Spring">Spring</option>
+            <h2>When are you planning to go to Melbourne?</h2>
+              <input type="date" id="holidayDate">
+              <h3 id="seasonBox"><span id="currentSeason"></span></h3>
             </select>
         </div>
         
