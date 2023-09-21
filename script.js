@@ -153,3 +153,16 @@ function getRecommendation() {
 
 dateElement.dispatchEvent(new Event('change'));
 fetchWeatherData();
+
+document.addEventListener("DOMContentLoaded", function() {
+  const dateElement = document.getElementById('holidayDate');
+
+  dateElement.addEventListener('change', async function() {
+    const selectedDate = dateElement.value; // Get the date string from the input
+    const prediction = await predictWeather(selectedDate);
+
+    // Display the results
+    console.log(`Predicted temperature: ${prediction.temperature}`);
+    console.log(`Will it rain? ${prediction.willRain ? 'Yes' : 'No'}`);
+  });
+});

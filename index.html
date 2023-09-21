@@ -29,19 +29,15 @@
               <h3 id="seasonBox"><span id="currentSeason"></span></h3>
             </select>
         </div>
-        
-        <div id="part2">
-            <h2>What would you like to do while on holiday?</h2>
-            <select id="activity">
-            </select>
-        </div>
-        </div>
+      </div>
     </div>
     <button onclick="getRecommendation()">GET RECOMMENDATION</button>
     <div id="result">
         <h2>Recommended Destination:</h2>
         <p id="recommendation"></p>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="script.js"></script>
+    <script src="ml_model.js"></script>
 </body>
 </html>
