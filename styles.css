@@ -123,7 +123,13 @@ h4{
   margin-left: 10px;
   margin-top: 0px;
   font-size: 14px;
-  font-weight: 570;
+  font-weight: 500;
+}
+
+h5 {
+  margin-left: 15px;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 /* Button Styles */

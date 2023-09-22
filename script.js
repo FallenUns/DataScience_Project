@@ -1,3 +1,5 @@
+import weatherPlaceDB from "./placeDatabase.js";
+
 function getSeason(date) {
   const month = date.getMonth();
   if (month >= 2 && month <= 4) return 'Autumn';
@@ -7,10 +9,6 @@ function getSeason(date) {
 }
 
 const dateElement = document.getElementById('holidayDate');
-const recommendationElement = document.getElementById('recommendation');
-const weatherIcon = document.getElementById('weatherIcon');
-const sunIcon = document.getElementById('sunIcon');
-const sunInfo = document.getElementById('sunTime');
 
 const activities = {
   'Summer': ['Beach', 'Camping', 'Wildlife'],
@@ -30,11 +28,17 @@ function fetchWeatherData() {
   .then(data => {
     let iconClass;
     const temperatureInKelvin = data.main.temp;
-    const temperatureInCelsius = parseInt(temperatureInKelvin - 273.15, 10);
-
+    const temperatureInCelsiusRaw = temperatureInKelvin - 273.15;
+    
+    // Round to the nearest integer if the decimal is equal to or greater than 0.5
+    const temperatureInCelsius = Math.round(temperatureInCelsiusRaw * 10) / 10;
+    
+    // Round up if the value after the decimal point is >= 0.5
+    const roundedTemperatureInCelsius = Math.round(temperatureInCelsius);
+    
     const temperatureValue = document.getElementById('temperatureValue');
     if (temperatureValue) {
-      temperatureValue.innerHTML = `${temperatureInCelsius}°C`;
+      temperatureValue.innerHTML = `${roundedTemperatureInCelsius}°C`;
     }
 
     const locationInfo = document.getElementById('locationInfo');
@@ -125,7 +129,6 @@ const seasonSymbols = {
 dateElement.addEventListener('change', function() {
   const selectedDate = new Date(dateElement.value);
   const selectedSeason = getSeason(selectedDate);
-  const seasonActivities = activities[selectedSeason];
   const selectedColor = colors[selectedSeason] || '#FFFFFF';
 
   const seasonField = document.getElementById('currentSeason');
@@ -144,12 +147,13 @@ dateElement.addEventListener('change', function() {
   seasonField.innerHTML = `Selected Season: ${selectedSeason} ${selectedSeasonSymbol}`;
 });
 
+let prediction = {};
 async function fetchForecastWeather(date) {
   const apiUrl = `https://pro.openweathermap.org/data/2.5/forecast/climate?lat=${melbourneLat}&lon=${melbourneLon}&appid=${apiKey}`;
-  let weatherData = {};
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
+    console.log("API Response: ", data);
     const targetDate = new Date(date);
     const targetTimestamp = Math.floor(targetDate.getTime() / 1000);  // Convert to Unix timestamp (UTC)
 
@@ -162,26 +166,22 @@ async function fetchForecastWeather(date) {
     });
 
     if (forecast) {
-      weatherData = {
-        temperature: parseInt(forecast.temp.day - 273.15, 10),  // Kelvin to Celsius
-        rain: forecast.rain || 0  // mm
+      const rawTempInCelsius = forecast.temp.day - 273.15;
+      const roundedTempInCelsius = Math.round(rawTempInCelsius);
+      prediction = {
+        temperature: roundedTempInCelsius,
+        rain: forecast.rain || 0,
       };
     }
   } catch (error) {
     console.error("Error fetching weather data: ", error);
   }
-  return weatherData;
-}
-
-function getRecommendation() {
-  const selectedDate = new Date(dateElement.value);
-  const selectedSeason = getSeason(selectedDate);
-  const recommendation = `Place for ${selectedSeason}`;
-  recommendationElement.innerText = recommendation;
+  return prediction
 }
 
 dateElement.dispatchEvent(new Event('change'));
 fetchWeatherData();
+document.getElementById('getRecommendationButton').addEventListener('click', getRecommendation);
 
 // Function to format date from yyyy-mm-dd to dd MMMM yyyy
 function formatDate(inputDate) {
@@ -239,6 +239,47 @@ dateElement.value = formattedToday;
 // Dispatch an event to trigger any 'change' event listeners
 dateElement.dispatchEvent(new Event('change'));
 
+function getRainCategory(dailyrain) {
+  if (dailyrain === 0) return 'Clear';
+  if (dailyrain > 0 && dailyrain <= 5) return 'Slight rain';
+  if (dailyrain > 5 && dailyrain <= 15) return 'Moderate rain';
+  if (dailyrain > 15 && dailyrain <= 30) return 'Heavy rain';
+  if (dailyrain > 30 && dailyrain <= 50) return 'Very heavy rain';
+  if (dailyrain > 100) return 'Extreme rain';
+  return 'No data';
+}
+
+function getRecommendation() {
+  const { temperature, rain } = prediction;  // Use global prediction object
+  console.log(temperature, rain)
+  let recommendation;
+  if (temperature > 11) {
+    if (rain < 5) {
+      recommendation = weatherPlaceDB['Hot and Dry'];
+    } else {
+      recommendation = weatherPlaceDB['Hot and Wet'];
+    }
+  } else {
+    if (rain < 5) {
+      recommendation = weatherPlaceDB['Cold and Dry'];
+    } else {
+      recommendation = weatherPlaceDB['Cold and Wet'];
+    }
+  }
+  document.getElementById('placeRecommendation').innerText = `Places for you to visit: ${recommendation.join(', ')}`;
+}
+
+document.getElementById('getRecommendationButton').addEventListener('click', function() {
+  const selectedDate = new Date(dateElement.value);
+  fetchForecastWeather(selectedDate)
+    .then(() => {
+      getRecommendation();
+    })
+    .catch(error => {
+      console.error("Error fetching weather data: ", error);
+    });
+});
+
 // This will run when the document is fully loaded
 document.addEventListener("DOMContentLoaded", function() {
   // Initialize boxes to be active
@@ -256,29 +297,25 @@ document.addEventListener("DOMContentLoaded", function() {
       thirtyDaysFromNow.setDate(today.getDate() + 30);
       const thirtyDaysBefore = new Date();
       thirtyDaysBefore.setDate(today.getDate() - 30);
-      
-
-      let prediction;
-
-      // Check if the selected date is within the next 30 days
+    
       if (new Date(selectedDate) > thirtyDaysBefore && new Date(selectedDate) < thirtyDaysFromNow) {
         // Fetch forecast weather data
         prediction = await fetchForecastWeather(selectedDate);
-        console.log("Prediction object:", prediction);
       } else {
         // Use ML model to predict weather (Your existing code)
         prediction = await predictWeather(selectedDate);  // Assuming predictWeather is defined elsewhere
       }
-
+      
       // Update UI
+      const boldCat = `<b>${getRainCategory(prediction.rain)}</b>`;
       const boldTemperature = `<b>${prediction.temperature}°C</b>`;
       const boldRain = `<b>${prediction.rain}mm</b>`;
       const formattedDate = formatDate(selectedDate);
-      predictedWeatherElement.innerHTML = `The weather that you will most likely to experience in Melbourne on <b>${formattedDate}</b> is ${boldTemperature} with a ${boldRain} chance of rain.`;
+      predictedWeatherElement.innerHTML = `The weather you're most likely to experience in Melbourne on <b>${formattedDate}</b>, is an average temperature of ${boldTemperature}. With a total expected rainfall of ${boldRain} for the day, the conditions are likely to be ${boldCat}.`;
 
       // For demonstration, using a static 'moderate' value for tourism activity
       // In a real-world scenario, this would be predicted by your model or fetched from an API
       updateTourismActivityBoxes('moderate');
-    }, 2000); // 2-second buffer
+    }, 2000);
   });
 });

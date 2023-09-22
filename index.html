@@ -29,10 +29,11 @@
               <input type="date" id="holidayDate">
               <h3 id="seasonBox"><span id="currentSeason"></span></h3>
             </h2>
+            <h5>Best Time to Visit Melbourne is: Autumn and Spring</h5>
         </div>
         <div id="predictedWeather">
           <h2>Predicted Weather</h2>
-            <h4><p id="predictedWeatherOutput">The weather that you will most likely to experience in Melbourne on dd/mm/yyyy is --°C with a --mm chance of rain.</p></h4> 
+            <h4><p id="predictedWeatherOutput">The weather you're most likely to experience in Melbourne on dd/mm/yyyy, is an average temperature of --°C. With a total expected rainfall of --mm for the day, the conditions are likely to be ---.</p></h4> 
           <h2>Predicted Tourism Activity</h2>
             <h4><p id="predictedTourist">On the selected month, you can expect the levels of activity to be:</p></h4>
           <div id="lowBox" class="tourism-box low">Low</div>
@@ -41,14 +42,14 @@
         </div>
       </div>
     </div>
-    <button onclick="getRecommendation()">GET RECOMMENDATION</button>
-    <div>
-      <h1>
+    <button id="getRecommendationButton">GET RECOMMENDATION</button>
+    <div id="recommendation">
+      <h2 id="placeRecommendation">
         <!-- PLACE RECOMMENDER HERE, HARD CODE THIS SHIT -->
-      </h1>
+      </h2>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="ml_model.js"></script>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
