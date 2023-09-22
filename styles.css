@@ -334,3 +334,9 @@ button {
 #resetFilterButton:hover {
   background-color: #696969;  /* Darker gray */
 }
+
+#resetFilterButton:disabled,
+#getRecommendationButton:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}

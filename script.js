@@ -331,7 +331,14 @@ document.addEventListener("DOMContentLoaded", function() {
         // Use ML model to predict weather (Your existing code)
         prediction = await predictWeather(selectedDate);  // Assuming predictWeather is defined elsewhere
       }
-      
+
+      // Inside your fetchForecastWeather or similar function
+      if (Object.keys(prediction).length > 0) {
+        document.getElementById('getRecommendationButton').disabled = false;
+      } else {
+        document.getElementById('getRecommendationButton').disabled = true;
+      }
+
       // Update UI
       const boldCat = `<b>${getRainCategory(prediction.rain)}</b>`;
       const boldTemperature = `<b>${prediction.temperature}°C</b>`;
