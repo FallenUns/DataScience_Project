@@ -278,6 +278,7 @@ button {
 .dropdown-content {
   display: none;
   position: absolute;
+  margin-top: 230px;
   margin-right: 30px;
   right: 0;  /* Align to the right edge of the parent */
   background-color: #f6f6f6;
@@ -286,7 +287,6 @@ button {
   z-index: 1;
   overflow-y: auto;  /* Add scroll when content overflows */
   max-height: 300px;  /* Limit height */
-  top: 107%;
 }
 
 /* Links inside the dropdown */
