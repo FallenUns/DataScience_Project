@@ -251,37 +251,34 @@ function getRainCategory(dailyrain) {
 
 function getRecommendation() {
   const selectedDate = new Date(dateElement.value);
-  const rain = prediction.rain;  // Use global prediction object
+  const rain = prediction.rain;  // Use the global prediction object
   const season = getSeason(selectedDate);
-  console.log(rain, season);
-  let recommendation;
+
+  let recommendationKey;
   if (season === 'Summer') {
-    if (rain <= 5) {
-      recommendation = weatherPlaceDB['Summer and Dry'];
-    } else {
-      recommendation = weatherPlaceDB['Summer and Wet'];
-    }
+    recommendationKey = (rain <= 5) ? 'Summer and Dry' : 'Summer and Wet';
   } else if (season === 'Winter') {
-    if (rain <= 5) {
-      recommendation = weatherPlaceDB['Winter and Dry'];
-    } else {
-      recommendation = weatherPlaceDB['Winter and Wet'];
-    }
+    recommendationKey = (rain <= 5) ? 'Winter and Dry' : 'Winter and Wet';
   } else if (season === 'Spring') {
-    if (rain <= 5) {
-      recommendation = weatherPlaceDB['Spring and Dry'];
-    } else {
-      recommendation = weatherPlaceDB['Spring and Wet'];
-    }
+    recommendationKey = (rain <= 5) ? 'Spring and Dry' : 'Spring and Wet';
   } else {
-    if (rain <= 5) {
-      recommendation = weatherPlaceDB['Autumn and Dry'];
-    } else {
-      recommendation = weatherPlaceDB['Autumn and Wet'];
-    }
+    recommendationKey = (rain <= 5) ? 'Autumn and Dry' : 'Autumn and Wet';
   }
-  console.log(recommendation);
-  document.getElementById('placeRecommendation').innerText = `Places for you to visit: ${recommendation.join(', ')}`;
+
+  const recommendation = weatherPlaceDB[recommendationKey];
+  if (!recommendation) {
+    console.log("No recommendations found for this season and weather condition.");
+    return;
+  }
+
+  // Create a text string for each category
+  let recommendationText = "Places for you to visit based on weather conditions:\n";
+  for (const [category, items] of Object.entries(recommendation)) {
+    const itemList = items.join(', ');
+    recommendationText += `\n${category}:\n${itemList}\n`;
+  }
+
+  document.getElementById('placeRecommendation').innerText = recommendationText;
 }
 
 document.getElementById('getRecommendationButton').addEventListener('click', function() {

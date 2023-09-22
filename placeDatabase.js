@@ -100,7 +100,7 @@ const weatherPlaceDB = {
   'Winter and Dry': {
     'Entertainment': [
       'ice skating at the ice rink or O\'Brien Group Arena',
-      'AFL (Australian Football League) match at MCG', \
+      'AFL (Australian Football League) match at MCG',
       'Eureka Skydeck\'s "Edge Experience"'],
     'Sightseeing': [
       'Werribee Mansion',
