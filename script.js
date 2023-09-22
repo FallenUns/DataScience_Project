@@ -250,22 +250,37 @@ function getRainCategory(dailyrain) {
 }
 
 function getRecommendation() {
-  const { temperature, rain } = prediction;  // Use global prediction object
-  console.log(temperature, rain)
+  const selectedDate = new Date(dateElement.value);
+  const rain = prediction.rain;  // Use global prediction object
+  const season = getSeason(selectedDate);
+  console.log(rain, season);
   let recommendation;
-  if (temperature > 11) {
-    if (rain < 5) {
-      recommendation = weatherPlaceDB['Hot and Dry'];
+  if (season === 'Summer') {
+    if (rain <= 5) {
+      recommendation = weatherPlaceDB['Summer and Dry'];
     } else {
-      recommendation = weatherPlaceDB['Hot and Wet'];
+      recommendation = weatherPlaceDB['Summer and Wet'];
+    }
+  } else if (season === 'Winter') {
+    if (rain <= 5) {
+      recommendation = weatherPlaceDB['Winter and Dry'];
+    } else {
+      recommendation = weatherPlaceDB['Winter and Wet'];
+    }
+  } else if (season === 'Spring') {
+    if (rain <= 5) {
+      recommendation = weatherPlaceDB['Spring and Dry'];
+    } else {
+      recommendation = weatherPlaceDB['Spring and Wet'];
     }
   } else {
-    if (rain < 5) {
-      recommendation = weatherPlaceDB['Cold and Dry'];
+    if (rain <= 5) {
+      recommendation = weatherPlaceDB['Autumn and Dry'];
     } else {
-      recommendation = weatherPlaceDB['Cold and Wet'];
+      recommendation = weatherPlaceDB['Autumn and Wet'];
     }
   }
+  console.log(recommendation);
   document.getElementById('placeRecommendation').innerText = `Places for you to visit: ${recommendation.join(', ')}`;
 }
 
