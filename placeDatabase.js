@@ -1,5 +1,3 @@
-// placesDatabase.js
-
 const weatherPlaceDB = {
   'Summer and Dry': {
     'Sightseeing': [
@@ -137,14 +135,6 @@ const weatherPlaceDB = {
       'Dandenong Ranges Botanic Garden',
       'Macedon Ranges',
     ],
-    'Sports': [
-      'Hiking in the Grampians National Park',
-      'Watch AFL game',
-      'Melbourne Cup',
-      'Cycling along the Capital City Trail',
-      'Rock Climbing in the You Yangs Regional Park',
-      'Mountain Biking in Lysterfield Park',
-    ],
     'Entertainment': [
       'Yarra Valley wineries',
       'Peninsula Hot Springs',
@@ -159,6 +149,14 @@ const weatherPlaceDB = {
       'Melbourne Spring Fashion Week',
       'Melbourne International Flower and Garden Show',
       'Melbourne Spring Fashion Week (MSFW) Runway Shows',
+    ],
+    'Sports': [
+      'Hiking in the Grampians National Park',
+      'Watch AFL game',
+      'Melbourne Cup',
+      'Cycling along the Capital City Trail',
+      'Rock Climbing in the You Yangs Regional Park',
+      'Mountain Biking in Lysterfield Park',
     ],
   },
   'Spring and Wet': {

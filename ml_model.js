@@ -26,7 +26,7 @@ async function predictWeather(inputDateString) {
   // };
   return{
     temperature: 25,
-    rain: 13
+    rain: 20
   }
 }
 

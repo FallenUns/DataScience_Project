@@ -35,7 +35,7 @@
           <h2>Predicted Weather</h2>
             <h4><p id="predictedWeatherOutput">The weather you're most likely to experience in Melbourne on dd/mm/yyyy, is an average temperature of --°C. With a total expected rainfall of --mm for the day, the conditions are likely to be ---.</p></h4> 
           <h2>Predicted Tourism Activity</h2>
-            <h4><p id="predictedTourist">On the selected month, you can expect the levels of activity to be:</p></h4>
+            <h4><p id="predictedTourist">On the selected month, you can expect the levels of tourism activity to be:</p></h4>
           <div id="lowBox" class="tourism-box low">Low</div>
           <div id="moderateBox" class="tourism-box moderate">Moderate</div>
           <div id="busyBox" class="tourism-box busy">Busy</div>
@@ -43,10 +43,43 @@
       </div>
     </div>
     <button id="getRecommendationButton">GET RECOMMENDATION</button>
-    <div id="recommendation">
-      <h2 id="placeRecommendation">
-        <!-- PLACE RECOMMENDER HERE, HARD CODE THIS SHIT -->
-      </h2>
+    <div id="reccomendation" class="headerWithFilter">
+      <div id="placeRecommendation">
+        <div class="title-and-filter">
+          <h2>Places for you to visit based on weather conditions:</h2>
+          <div class="button-container">
+            <button id="resetFilterButton">Reset Filter</button>
+            <button class="dropbtn">Filter</button>
+            <div id="categoryDropdown" class="dropdown-content">
+              <div class="checkbox-container">
+                <div class="checkbox-item">
+                  <input type="checkbox" name="all" id="all" checked>
+                  <label for="all">All</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" name="Sightseeing" id="Sightseeing">
+                  <label for="Sightseeing">Sightseeing</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" name="Entertainment" id="Entertainment">
+                  <label for="Entertainment">Entertainment</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" name="Sports" id="Sports">
+                  <label for="Sports">Sports</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" name="Festivals" id="Festivals">
+                  <label for="Festivals">Festivals</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" name="Exhibitions" id="Exhibitions">
+                  <label for="Exhibitions">Exhibitions</label>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="ml_model.js"></script>

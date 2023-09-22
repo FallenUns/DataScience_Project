@@ -271,14 +271,28 @@ function getRecommendation() {
     return;
   }
 
-  // Create a text string for each category
-  let recommendationText = "Places for you to visit based on weather conditions:\n";
+  // Create HTML content for each category
+  let recommendationHTML = '<div class="categories-container">';
   for (const [category, items] of Object.entries(recommendation)) {
-    const itemList = items.join(', ');
-    recommendationText += `\n${category}:\n${itemList}\n`;
+    recommendationHTML += `<div class="recommendation-category"><h6>${category}:</h6><ul>`;
+    items.forEach(item => {
+      recommendationHTML += `<li class="recommendation-item">${item}</li>`;
+    });
+    recommendationHTML += '</ul></div>';
   }
+  recommendationHTML += '</div>';
 
-  document.getElementById('placeRecommendation').innerText = recommendationText;
+  const placeRecommendation = document.getElementById('placeRecommendation');
+  // Create or get the existing recommendation list container
+  let recommendationContainer = document.getElementById('recommendationContainer');
+  if (!recommendationContainer) {
+    recommendationContainer = document.createElement('div');
+    recommendationContainer.id = 'recommendationContainer';
+    placeRecommendation.appendChild(recommendationContainer);
+  }
+  
+  // Set the new recommendations
+  recommendationContainer.innerHTML = recommendationHTML;
 }
 
 document.getElementById('getRecommendationButton').addEventListener('click', function() {
@@ -330,4 +344,63 @@ document.addEventListener("DOMContentLoaded", function() {
       updateTourismActivityBoxes('moderate');
     }, 2000);
   });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Dropdown Functionality
+  const btn = document.querySelector(".dropbtn");
+  btn.addEventListener("click", function() {
+    document.getElementById("categoryDropdown").classList.toggle("show");
+  });
+
+  // Filter Functionality
+  const filterCategoryDiv = document.getElementById('categoryDropdown');
+  
+  // Function to apply filter
+  function applyFilter() {
+    const allCategories = document.querySelectorAll('.recommendation-category');
+    const checkedBoxes = filterCategoryDiv.querySelectorAll('input[type=checkbox]:checked');
+    const checkedCategories = Array.from(checkedBoxes).map(box => box.name);
+
+    allCategories.forEach((categoryDiv) => {
+      const categoryName = categoryDiv.querySelector('h6').textContent.replace(':', '');
+      if (checkedCategories.includes('all') || checkedCategories.includes(categoryName)) {
+        categoryDiv.style.display = 'block';
+      } else {
+        categoryDiv.style.display = 'none';
+      }
+    });
+  }
+  
+// Function to reset all filters
+function resetFilter() {
+  const allCheckboxes = filterCategoryDiv.querySelectorAll('input[type=checkbox]');
+  allCheckboxes.forEach(box => box.checked = false);
+  document.getElementById('all').checked = true; // set "All" to checked
+  applyFilter();
+}
+
+// Adding an event listener to reset filter button
+const resetBtn = document.getElementById("resetFilterButton");
+resetBtn.addEventListener("click", resetFilter);
+
+
+  filterCategoryDiv.addEventListener('change', function(event) {
+    // Uncheck "All" if any other categories are selected
+    if (event.target.id !== 'all' && event.target.checked) {
+      document.getElementById('all').checked = false;
+    }
+    
+    // Check "All" if no other categories are selected
+    const checkedBoxes = filterCategoryDiv.querySelectorAll('input[type=checkbox]:checked');
+    if (checkedBoxes.length === 0 || (checkedBoxes.length === 1 && checkedBoxes[0].id === 'all')) {
+      document.getElementById('all').checked = true;
+    }
+    
+    // Apply the filter
+    applyFilter();
+  });
+  
+  // Initial filter application
+  applyFilter();
 });
